@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# PyCharm local project settings
+.idea/
+
+# macOS AppleDouble files
+._*
