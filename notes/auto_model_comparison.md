@@ -1,6 +1,6 @@
 # Automatic Local Model Comparison
 
-Generated at: 2026-06-05 18:55:07
+Generated at: 2026-06-05 19:28:35
 
 ## Prompt
 
@@ -12,72 +12,72 @@ clear, technical, and concise.
 
 ### qwen2.5-coder:7b
 
-Time: 24.11 seconds
+Time: 20.36 seconds
 
 Response:
 
-To use Ollama, a local model runtime, in a Python application for sending prompts to a local language model and receiving responses, you would typically follow these steps:
+To use Ollama in a Python application for sending prompts to a local language model and receiving responses, follow these steps:
 
-1. **Install Ollama**: Ensure that Ollama is installed locally on your machine. You might install it via pip or another package manager if available.
+1. **Install Ollama**: Ensure that Ollama is installed on your system. You can typically install it using pip or from the official documentation.
 
-2. **Initialize the Model**: Set up an instance of the model using the Ollama runtime. This usually involves loading a pre-trained model file into memory.
+2. **Import Required Libraries**: In your Python script, import any necessary libraries. For Ollama communication, you might need a client library that allows for API calls to the model.
 
-3. **Create a Prompt**: Construct a string that contains the input you want to send to the language model. The prompt should be well-structured and clear, as it will dictate what kind of response the model generates.
+3. **Initialize Ollama Client**: Create an instance of the Ollama client. This initialization will establish a connection to the local language model server.
 
-4. **Send the Prompt**: Use Ollama's API or interface to send the prompt to the model. This could involve calling a specific function or method provided by Ollama.
+4. **Send Prompt**: Use the client's method to send a prompt to the model. The prompt should be in the format expected by the model, often plain text.
 
-5. **Receive the Response**: After sending the prompt, wait for and receive the model's output. This output is typically the text generated based on your input prompt.
+5. **Receive Response**: After sending the prompt, call the appropriate method on the client to receive the response from the model. This might involve parsing JSON or another data format depending on how the model returns its responses.
 
-6. **Process the Response**: Once you have the response, you can process it as needed in your Python application. This might involve parsing the text, extracting relevant information, or displaying it to the user.
+6. **Process Response**: Once you have the response, process it according to your application's requirements. This could involve further analysis, display, or storage of the output.
 
-Here is a simplified example of what this might look like in Python code:
+Here's a simplified example of what this might look like in code:
 
 ```python
-# Step 1: Install Ollama (assuming pip install)
-# pip install ollama
+# Import necessary library
+from ollama_client import OllamaClient
 
-from ollama import OllamaModel
+def main():
+    # Initialize the Ollama client
+    client = OllamaClient(host='localhost', port=5000)
+    
+    # Define the prompt to send to the model
+    prompt = "Translate the following English text to Spanish: 'Hello, how are you?'"
+    
+    # Send the prompt and receive the response
+    response = client.send_prompt(prompt)
+    
+    # Process the response (e.g., print it)
+    print("Translated Text:", response)
 
-# Step 2: Initialize the model
-model = OllamaModel("path_to_pretrained_model")
-
-# Step 3: Create a prompt
-prompt = "Translate the following English text to French: Hello, how are you?"
-
-# Step 4: Send the prompt and receive the response
-response = model.generate(prompt)
-
-# Step 5: Process the response (in this case, just print it)
-print("Translation:", response)
+if __name__ == "__main__":
+    main()
 ```
 
-Please note that the actual implementation details can vary depending on the specific Ollama library or runtime you are using. Always refer to the official documentation for the most accurate and detailed instructions.
+This example assumes that `ollama_client` is a fictional library representing Ollama's Python client. You would replace this with the actual library name or custom code to interact with your local model server according to its API documentation.
 
 ### qwen3:14b
 
-Time: 67.67 seconds
+Time: 66.31 seconds
 
 Response:
 
-A Python application can interact with Ollama via its HTTP API. Here's how:
+A Python application can use the Ollama client library to interact with a local language model via HTTP. Here's the process:
 
-1. **Install Ollama** and load a model (e.g., `ollama run llama3`).
-2. Use the `requests` library to send prompts to `http://localhost:11434/api/generate`.
+1. **Install the Ollama client**:
+   ```bash
+   pip install ollama
+   ```
 
-```python
-import requests
+2. **Send a prompt and receive a response**:
+   ```python
+   from ollama import Client
 
-response = requests.post(
-    "http://localhost:11434/api/generate",
-    json={"model": "llama3", "prompt": "Hello, how are you?"}
-)
-
-for line in response.iter_lines():
-    if line:
-        print(line.decode())
-```
+   client = Client()
+   response = client.generate(model='llama3', prompt='Explain quantum computing in simple terms.')
+   print(response.text)
+   ```
 
 **Key details**:
-- The model must be running locally via Ollama.
-- The API returns a stream of JSON lines; use `iter_lines()` to process them incrementally.
-- Error handling (e.g., model availability, HTTP status codes) should be added for robustness.
+- Ollama runs a local HTTP server (default: `http://localhost:11434`).
+- The model must be loaded locally (e.g., via `ollama run llama3`).
+- The `generate` method sends the prompt and returns the model's response as a `text` field in the JSON response.

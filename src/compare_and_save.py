@@ -4,10 +4,12 @@ from pathlib import Path
 
 import ollama
 
+from model_config import get_model
 
-MODELS = [
-    "qwen2.5-coder:7b",
-    "qwen3:14b",
+
+MODEL_KEYS = [
+    "coder",
+    "balanced",
 ]
 
 PROMPT = """
@@ -72,7 +74,9 @@ def main() -> None:
     print("Running automatic local model comparison...")
     print("=" * 50)
 
-    for model in MODELS:
+    for model_key in MODEL_KEYS:
+        model = get_model(model_key)
+
         print(f"\nRunning model: {model}")
 
         try:
