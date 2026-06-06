@@ -1,10 +1,11 @@
 import time
 import ollama
+from model_config import get_model
 
 
-MODELS = [
-    "qwen2.5-coder:7b",
-    "qwen3:14b",
+MODEL_KEYS = [
+    "coder",
+    "balanced",
 ]
 
 PROMPT = """
@@ -30,7 +31,8 @@ def main():
     print("Local AI Model Comparison")
     print("=" * 40)
 
-    for model in MODELS:
+    for model_key in MODEL_KEYS:
+        model = get_model(model_key)
         print(f"\nModel: {model}")
         print("-" * 40)
 
