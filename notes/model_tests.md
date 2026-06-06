@@ -32,6 +32,22 @@ Ollama is a local model runtime. Explain how a Python application can use Ollama
 - For higher-quality reasoning, `qwen3:14b` is better.
 - `qwen3:30b` should be used only for heavier tests because it consumes much more memory.
 
+## Test 2: Advanced Model Local Inference Explanation
+
+### Prompt
+
+Explain in one concise technical paragraph how local LLM inference works on Apple Silicon with Ollama.
+
+### Result
+
+| Model | Time | Runtime Notes | Quality Notes |
+|---|---:|---|---|
+| `qwen3:30b` | 39.82 seconds | Used about 19 GB while loaded. Ollama reported approximately 6% CPU / 94% GPU usage with context 4096. | Strong concise technical answer. Correctly referenced quantized weights, local inference, Apple Metal acceleration, and tensor operations. |
+
+### Operational Note
+
+After the test, `qwen3:30b` was stopped with `ollama stop qwen3:30b`, and `ollama ps` confirmed that no model remained loaded in memory.
+
 ## Next Test Ideas
 
 - Compare all three models with the same coding task.
