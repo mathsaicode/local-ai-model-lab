@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 import time
 from pathlib import Path
 
@@ -18,7 +19,7 @@ to send prompts to a local language model and receive responses. Keep the answer
 clear, technical, and concise.
 """
 
-OUTPUT_FILE = Path("notes/auto_model_comparison.md")
+REPORTS_DIR = Path("notes/reports")
 
 
 def generate_response(model: str, prompt: str) -> tuple[str, float]:
@@ -33,8 +34,20 @@ def generate_response(model: str, prompt: str) -> tuple[str, float]:
     return response["response"], elapsed_time
 
 
+def build_output_file() -> Path:
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    safe_name = re.sub(
+        r"[^a-zA-Z0-9_-]+",
+        "-",
+        "local-model-comparison",
+    ).strip("-")
+
+    return REPORTS_DIR / f"{timestamp}-{safe_name}.md"
+
+
 def save_results(results: list[dict]) -> None:
-    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    output_file = build_output_file()
+    output_file.parent.mkdir(parents=True, exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -65,7 +78,10 @@ def save_results(results: list[dict]) -> None:
             ]
         )
 
-    OUTPUT_FILE.write_text("\n".join(markdown), encoding="utf-8")
+    output_file.write_text("\n".join(markdown), encoding="utf-8")
+
+    print("\nResults saved to:")
+    print(output_file)
 
 
 def main() -> None:
@@ -104,9 +120,6 @@ def main() -> None:
             print(f"Error while running {model}: {error}")
 
     save_results(results)
-
-    print("\nResults saved to:")
-    print(OUTPUT_FILE)
 
 
 if __name__ == "__main__":
