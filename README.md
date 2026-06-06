@@ -13,24 +13,34 @@ The main goals are:
 - Compare different models by quality, speed, and memory usage.
 - Document practical experiments with local AI on a Mac mini M4.
 
-## Current Local Models
+## Hardware
 
-The following models are installed locally through Ollama:
+- Machine: Mac mini M4
+- Memory: 24 GB unified memory
+- Runtime: Ollama
+- Python: 3.12
 
-- `qwen3:30b` — advanced model for heavier reasoning tests.
-- `qwen3:14b` — balanced model for daily local AI work.
-- `qwen2.5-coder:7b` — coding-focused model for Python and development tasks.
+## Local Models
 
-## Current Status
+| Key | Model | Role |
+|---|---|---|
+| `coder` | `qwen2.5-coder:7b` | Fast coding-focused model |
+| `balanced` | `qwen3:14b` | Better balance between quality and speed |
+| `advanced` | `qwen3:30b` | Heavier reasoning and quality tests |
 
-- GitHub repository created.
-- Local project cloned into the Mac.
-- `.gitignore` configured for Python, PyCharm, virtual environments, and macOS AppleDouble files.
-- Ollama installed successfully.
-- Local models downloaded and tested.
-- Python virtual environment created with Python 3.12.
-- Python `ollama` package installed.
+## Project Structure
 
-## Next Step
+```text
+local-ai-model-lab/
+├── README.md
+├── requirements.txt
+├── notes/
+│   ├── auto_model_comparison.md
+│   └── model_tests.md
+└── src/
+    ├── compare_and_save.py
+    ├── compare_models.py
+    ├── model_config.py
+    ├── run_prompt.py
+    └── test_ollama.py
 
-Create the first Python script that sends a prompt to a local Ollama model and prints the response.
